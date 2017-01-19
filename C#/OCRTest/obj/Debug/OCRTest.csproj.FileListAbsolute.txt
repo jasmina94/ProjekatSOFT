@@ -1,0 +1,20 @@
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\bin\Debug\OCRTest.exe.config
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\bin\Debug\OCRTest.exe
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\bin\Debug\OCRTest.pdb
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\bin\Debug\tessnet2_64.dll
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\bin\Debug\tessnet2_64.pdb
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.csprojResolveAssemblyReference.cache
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.exe
+C:\Users\Jasmina\Downloads\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.pdb
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\bin\Debug\OCRTest.exe.config
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.exe
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.pdb
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\bin\Debug\OCRTest.exe
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\bin\Debug\OCRTest.pdb
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\bin\Debug\tessnet2_64.dll
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\bin\Debug\tessnet2_64.pdb
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.csprojResolveAssemblyReference.cache
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.Form1.resources
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.csproj.GenerateResource.Cache
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.Properties.Resources.resources
+D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\bin\Debug\NAudio.dll
