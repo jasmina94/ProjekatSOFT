@@ -10,6 +10,7 @@ namespace OCRTest
 
     class Program
     {
+        // Proba komentar
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();

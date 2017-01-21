@@ -18,3 +18,6 @@ D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 lib
 D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.csproj.GenerateResource.Cache
 D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\obj\Debug\OCRTest.Properties.Resources.resources
 D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 library\C#\OCRTest\bin\Debug\NAudio.dll
+C:\Users\Jasmina\Documents\Visual Studio 2015\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.exe.config
+C:\Users\Jasmina\Documents\Visual Studio 2015\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.exe
+C:\Users\Jasmina\Documents\Visual Studio 2015\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.pdb
