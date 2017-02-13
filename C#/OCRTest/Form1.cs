@@ -152,15 +152,15 @@ namespace OCRTest
             console.DeselectAll();
 
             //Za izgovor
-            WebClient tts;
-            putanja = Environment.CurrentDirectory + @"/mp3/play" + redniBroj + ".mp3";
-            redniBroj++;
-            Uri uri = new Uri("https://translate.google.rs/translate_tts?client=tw-ob&tl=" + languageSpeak + "&q=" + procitanTekst);
-            using (tts = new WebClient())
-            {
-                tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
-                tts.DownloadFile(uri, putanja);
-            }
+            //WebClient tts;
+            //putanja = Environment.CurrentDirectory + @"/mp3/play" + redniBroj + ".mp3";
+            //redniBroj++;
+            //Uri uri = new Uri("https://translate.google.rs/translate_tts?client=tw-ob&tl=" + languageSpeak + "&q=" + procitanTekst);
+            //using (tts = new WebClient())
+            //{
+            //    tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
+            //    tts.DownloadFile(uri, putanja);
+            //}
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -274,6 +274,82 @@ namespace OCRTest
                 string text = page.GetText();
                 console.Text = text;
             }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            // prvo ocisti konzolu i ispisi tekst
+            
+            String message = "Validation of static text on 2 different fonts and 3 sizes. Arial and TimesNewRoman based on Levenstain distance algortithm.";
+
+            String val2 = "This is a lot of Arial 20 point text to test the ocr code and see  if it works on all types of file format.The quick brown dog jumped over the lazy fox.The quick brown dog jumped over the lazy fox.The quick brown dog jumped over the lazy fox.";
+
+            console.Text += message + Environment.NewLine + val2 + Environment.NewLine;
+
+
+            console.Text += "Validation for different sizes same font(Arial).";
+
+            string a10 = @"../../../staticimages/Arial10.PNG";
+            string a14 = @"../../../staticimages/Arial14.PNG";
+            string a20 = @"../../../staticimages/Arial20.PNG";
+
+            string result10 = "";
+            string result14 = "";
+            string result20 = "";
+            double resultAverage = 0.0;
+
+            using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+            using (var image = Pix.LoadFromFile(a20))
+            using (var page = engine.Process(image))
+            {
+                result20 = page.GetText();
+            }
+
+            String[] words = getWords(result20);
+            String[] realWords = getWords(val2);
+
+            console.Text += "Duzina reci: " + words.Length + "; " + realWords.Length + Environment.NewLine;
+            console.Text += result20 + Environment.NewLine;
+
+            //if(words.Length == realWords.Length)
+            //{
+            //    for(int i=0; i<words.Length; i++)
+            //    {
+            //        LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+            //        resultAverage += validator.ComputeLevensteinDistance(words[i], realWords[i]);
+            //    }
+            //    resultAverage = resultAverage / words.Length;
+            //}
+
+            for(int i = 0; i < realWords.Length; i++)
+            {
+                for (int j = 0; j < words.Length; j++)
+                {
+                    if (words[j].Contains(realWords[i]))
+                    {
+                        LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                        int pom = validator.ComputeLevensteinDistance(words[j], realWords[i]);
+                        console.Text += pom.ToString() + Environment.NewLine;
+
+                        resultAverage += pom;
+
+                        
+                    }
+                }
+            }
+            resultAverage = resultAverage / realWords.Length;
+
+            console.Text += resultAverage.ToString() + Environment.NewLine;
+
+        }
+
+        public String[] getWords(string result)
+        {
+            String[] ret = new String[1000];
+
+            ret = result.Split(' ');
+
+            return ret;
         }
     }
 }
