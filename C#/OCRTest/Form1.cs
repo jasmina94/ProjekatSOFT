@@ -27,10 +27,10 @@ namespace OCRTest
         String putanja;
         BlockAlignReductionStream volumeStream;
         WaveOutEvent player = new WaveOutEvent();
-        
+
         public Form1()
         {
-            
+
             InitializeComponent();
 
             console.Enabled = true;
@@ -40,7 +40,8 @@ namespace OCRTest
             comboBox1.Items.Add("English");
             comboBox1.Items.Add("German");
             comboBox1.Items.Add("Italian");
-            
+            comboBox1.Items.Add("Serbian Latin");
+
 
             synthesizer.Volume = 100;  // 0...100
             synthesizer.Rate = -2;     // -10...10
@@ -56,9 +57,12 @@ namespace OCRTest
             cancelSpeakingToolStripMenuItem.Enabled = false;
 
             DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + @"/mp3/");
-            foreach (FileInfo file in di.GetFiles())
+            if (di.GetFiles() != null)
             {
-                file.Delete();
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
             }
 
 
@@ -139,7 +143,7 @@ namespace OCRTest
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+
             WaveStream mainOutputStream = new Mp3FileReader(putanja);
             volumeStream = new BlockAlignReductionStream(mainOutputStream);
 
@@ -182,7 +186,7 @@ namespace OCRTest
 
         private void getImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            button1_Click(sender,e);
+            button1_Click(sender, e);
         }
 
         private void getTextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -199,7 +203,7 @@ namespace OCRTest
         {
             button4_Click(sender, e);
         }
-                
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.Text.Contains("English"))
@@ -209,7 +213,8 @@ namespace OCRTest
                 button1.Enabled = true;
                 getImageToolStripMenuItem.Enabled = true;
                 return;
-            }else if(comboBox1.Text.Contains("German"))
+            }
+            else if (comboBox1.Text.Contains("German"))
             {
                 language = "deu";
                 languageSpeak = "de";
@@ -225,7 +230,15 @@ namespace OCRTest
                 getImageToolStripMenuItem.Enabled = true;
                 return;
             }
+            else if (comboBox1.Text.Contains("Serbian Latin"))
+            {
+                language = "srp_latn";
+                languageSpeak = "sr";
+                button1.Enabled = true;
+                getImageToolStripMenuItem.Enabled = true;
+                return;
+            }
         }
- 
+
     }
 }
