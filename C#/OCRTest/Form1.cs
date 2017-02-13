@@ -19,7 +19,7 @@ namespace OCRTest
 {
     public partial class Form1 : Form
     {
-        private String text = "";
+        private String procitanTekst = "";
         private SpeechSynthesizer synthesizer = new SpeechSynthesizer();
         private Image image = null;
         String language = "";
@@ -28,6 +28,9 @@ namespace OCRTest
         String putanja;
         BlockAlignReductionStream volumeStream;
         WaveOutEvent player = new WaveOutEvent();
+
+        int imageCounter = 0;
+        string imageDir = @"../../../images";
 
         public Form1()
         {
@@ -57,7 +60,17 @@ namespace OCRTest
             button4.Enabled = false;
             cancelSpeakingToolStripMenuItem.Enabled = false;
 
-            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + @"/mp3/");
+            DirectoryInfo di2 = new DirectoryInfo(Environment.CurrentDirectory + @"/mp3/");
+            if (di2.GetFiles() != null)
+            {
+                foreach (FileInfo file in di2.GetFiles())
+                {
+                    file.Delete();
+                }
+            }
+
+            // Ocisti sve prethodne slike
+            DirectoryInfo di = new DirectoryInfo(imageDir);
             if (di.GetFiles() != null)
             {
                 foreach (FileInfo file in di.GetFiles())
@@ -86,7 +99,8 @@ namespace OCRTest
             image = SnippingTool.Snip();
             if (image != null)
             {
-                text = "";
+                imageCounter++;
+                procitanTekst = "";
                 button2.Enabled = true;
                 getTextToolStripMenuItem.Enabled = true;
                 button3.Enabled = false;
@@ -110,32 +124,36 @@ namespace OCRTest
 
         private void button2_Click(object sender, EventArgs e)
         {
+            string putanja1 = @"../../../tessdata";
+            string imagePath = imageDir + "/" + imageCounter.ToString() + ".png";
+            Bitmap bitmap = new Bitmap(image);
+            string procitanTekst = "";
 
-            //var ocr = new Tesseract();
-            //ocr.Init(@"../../../Data/tessdata", language, false);
-            //Bitmap bitmapa = new Bitmap(image);
-            //var result = ocr.DoOCR(bitmapa, Rectangle.Empty);
-            //foreach (Word word in result)
-            //{
-            //    console.Text += word.Text + " ";
-            //    text += word.Text + " ";
+            bitmap.Save(imagePath);
+            using (var engine = new TesseractEngine(putanja1, language, EngineMode.Default))
+            using (var image = Pix.LoadFromFile(imagePath))
+            using (var page = engine.Process(image))
+            {
+                string text = page.GetText();
+                console.Text = text;
+                procitanTekst = text;
+            }
 
-            //}
-            //text.Trim();
-            //if (!text.Contains("~"))
-            //{
-            //    button2.Enabled = false;
-            //    getTextToolStripMenuItem.Enabled = false;
-            //    button3.Enabled = true;
-            //    speakToolStripMenuItem.Enabled = true;
-            //}
+            procitanTekst.Trim();
+            if (!procitanTekst.Contains("~"))
+            {
+                button2.Enabled = false;
+                getTextToolStripMenuItem.Enabled = false;
+                button3.Enabled = true;
+                speakToolStripMenuItem.Enabled = true;
+            }
             console.DeselectAll();
 
             //Za izgovor
             WebClient tts;
             putanja = Environment.CurrentDirectory + @"/mp3/play" + redniBroj + ".mp3";
             redniBroj++;
-            Uri uri = new Uri("https://translate.google.rs/translate_tts?client=tw-ob&tl=" + languageSpeak + "&q=" + text);
+            Uri uri = new Uri("https://translate.google.rs/translate_tts?client=tw-ob&tl=" + languageSpeak + "&q=" + procitanTekst);
             using (tts = new WebClient())
             {
                 tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
