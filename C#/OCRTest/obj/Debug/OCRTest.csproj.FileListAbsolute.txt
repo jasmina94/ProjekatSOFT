@@ -33,3 +33,9 @@ C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csprojResolve
 C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Form1.resources
 C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Properties.Resources.resources
 C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.GenerateResource.Cache
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x64\liblept172.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x64\libtesseract304.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x86\liblept172.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x86\libtesseract304.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\Tesseract.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\Tesseract.xml

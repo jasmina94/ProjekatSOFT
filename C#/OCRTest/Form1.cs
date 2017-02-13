@@ -13,6 +13,7 @@ using System.Media;
 using System.Net;
 using NAudio.Wave;
 using System.IO;
+using Tesseract;
 
 namespace OCRTest
 {
@@ -109,24 +110,25 @@ namespace OCRTest
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var ocr = new Tesseract();
-            ocr.Init(@"../../../Data/tessdata", language, false);
-            Bitmap bitmapa = new Bitmap(image);
-            var result = ocr.DoOCR(bitmapa, Rectangle.Empty);
-            foreach (Word word in result)
-            {
-                console.Text += word.Text + " ";
-                text += word.Text + " ";
 
-            }
-            text.Trim();
-            if (!text.Contains("~"))
-            {
-                button2.Enabled = false;
-                getTextToolStripMenuItem.Enabled = false;
-                button3.Enabled = true;
-                speakToolStripMenuItem.Enabled = true;
-            }
+            //var ocr = new Tesseract();
+            //ocr.Init(@"../../../Data/tessdata", language, false);
+            //Bitmap bitmapa = new Bitmap(image);
+            //var result = ocr.DoOCR(bitmapa, Rectangle.Empty);
+            //foreach (Word word in result)
+            //{
+            //    console.Text += word.Text + " ";
+            //    text += word.Text + " ";
+
+            //}
+            //text.Trim();
+            //if (!text.Contains("~"))
+            //{
+            //    button2.Enabled = false;
+            //    getTextToolStripMenuItem.Enabled = false;
+            //    button3.Enabled = true;
+            //    speakToolStripMenuItem.Enabled = true;
+            //}
             console.DeselectAll();
 
             //Za izgovor
@@ -240,5 +242,18 @@ namespace OCRTest
             }
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string putanja = @"../../../tessdata";
+            string imageDir = @"../../../image.png";
+
+            using (var engine = new TesseractEngine(putanja, "eng", EngineMode.Default))
+            using (var image = Pix.LoadFromFile(imageDir))
+            using (var page = engine.Process(image))
+            {
+                string text = page.GetText();
+                console.Text = text;
+            }
+        }
     }
 }
