@@ -22,6 +22,8 @@ namespace OCRTest
         private String procitanTekst = "";
         private SpeechSynthesizer synthesizer = new SpeechSynthesizer();
         private Image image = null;
+
+
         String language = "";
         String languageSpeak = "";
         int redniBroj = 0;
