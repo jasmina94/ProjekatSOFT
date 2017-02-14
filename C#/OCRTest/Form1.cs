@@ -39,9 +39,14 @@ namespace OCRTest
 
             InitializeComponent();
 
-            console.Enabled = true;
-            console.ReadOnly = true;
-            console.BackColor = Color.White;
+
+            consoleTab1.Enabled = true;
+            consoleTab1.ReadOnly = true;
+            consoleTab1.BackColor = Color.White;
+
+            consoleTab2.Enabled = true;
+            consoleTab2.ReadOnly = true;
+            consoleTab2.BackColor = Color.White;
 
             comboBox1.Items.Add("English");
             comboBox1.Items.Add("German");
@@ -109,12 +114,12 @@ namespace OCRTest
                 speakToolStripMenuItem.Enabled = false;
                 button4.Enabled = false;
                 cancelSpeakingToolStripMenuItem.Enabled = false;
-                console.Text = "Succes image load!" + Environment.NewLine + Environment.NewLine;
-                console.DeselectAll();
+                consoleTab1.Text = "Succes image load!" + Environment.NewLine + Environment.NewLine;
+                consoleTab1.DeselectAll();
             }
             else
             {
-                console.Text = "Failed to load image!" + Environment.NewLine + Environment.NewLine;
+                consoleTab1.Text = "Failed to load image!" + Environment.NewLine + Environment.NewLine;
                 button2.Enabled = false;
                 getTextToolStripMenuItem.Enabled = false;
                 button3.Enabled = false;
@@ -137,7 +142,7 @@ namespace OCRTest
             using (var page = engine.Process(image))
             {
                 string text = page.GetText();
-                console.Text = text;
+                consoleTab1.Text = text;
                 procitanTekst = text;
             }
 
@@ -149,7 +154,7 @@ namespace OCRTest
                 button3.Enabled = true;
                 speakToolStripMenuItem.Enabled = true;
             }
-            console.DeselectAll();
+            consoleTab1.DeselectAll();
 
             //Za izgovor
             //WebClient tts;
@@ -182,7 +187,7 @@ namespace OCRTest
             //speakToolStripMenuItem.Enabled = false;
             button4.Enabled = true;
             cancelSpeakingToolStripMenuItem.Enabled = true;
-            console.DeselectAll();
+            consoleTab1.DeselectAll();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -195,7 +200,7 @@ namespace OCRTest
             speakToolStripMenuItem.Enabled = true;
             button4.Enabled = false;
             cancelSpeakingToolStripMenuItem.Enabled = true;
-            console.DeselectAll();
+            consoleTab1.DeselectAll();
         }
 
         private void playStoped(object sender, StoppedEventArgs e)
@@ -272,7 +277,7 @@ namespace OCRTest
             using (var page = engine.Process(image))
             {
                 string text = page.GetText();
-                console.Text = text;
+                consoleTab2.Text = text;
             }
         }
 
@@ -308,8 +313,8 @@ namespace OCRTest
             String[] words = getWords(result10);
             String[] realWords = getWords(val2);
 
-            console.Text += "Duzina skeniranog: " + words.Length + Environment.NewLine;
-            console.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+            consoleTab2.Text += "Duzina skeniranog: " + words.Length + Environment.NewLine;
+            consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
 
             //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
             //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
@@ -326,7 +331,7 @@ namespace OCRTest
                         {
                             LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
                             int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                            console.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                            consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
                             resultAverage += pom;
 
@@ -336,7 +341,7 @@ namespace OCRTest
                 }
                 resultAverage = resultAverage / realWords.Length;
 
-                console.Text += resultAverage.ToString() + Environment.NewLine;
+                consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
             }
         }
 
