@@ -23,6 +23,7 @@ namespace OCRTest
         private SpeechSynthesizer synthesizer = new SpeechSynthesizer();
         private Image image = null;
 
+        private String triger = "";
 
         String language = "";
         String languageSpeak = "";
@@ -52,6 +53,15 @@ namespace OCRTest
             comboBox1.Items.Add("German");
             comboBox1.Items.Add("Italian");
             comboBox1.Items.Add("Serbian Latin");
+
+            comboBox2.Items.Add("Arial 10point text");
+            comboBox2.Items.Add("Arial 14point text");
+            comboBox2.Items.Add("Arial 20point text");
+            comboBox2.Items.Add("Times New Roman 10point text");
+            comboBox2.Items.Add("Times New Roman 14point text");
+            comboBox2.Items.Add("Times New Roman 20point text");
+
+            staticOcr.Enabled = false;
 
 
             synthesizer.Volume = 100;  // 0...100
@@ -287,7 +297,12 @@ namespace OCRTest
             
             String message = "Validation of static text on 2 different fonts and 3 sizes. Arial and TimesNewRoman based on Levenstain distance algortithm.";
 
-            String val2 = "This is a lot of Arial 10 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox.";
+            String originalArial10 = "This is a lot of Arial 10 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
+            String originalArial14 = "This is a lot of Arial 14 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
+            String originalArial20 = "This is a lot of Arial 20 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
+            String originalTNR10 = "This is a lot of Times New Roman 10 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
+            String originalTNR14 = "This is a lot of Times New Roman 14 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
+            String originalTNR20 = "This is a lot of Times New Roman 20 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
 
             //console.Text += message + Environment.NewLine + val2 + Environment.NewLine;
 
@@ -297,51 +312,276 @@ namespace OCRTest
             string a10 = @"../../../staticimages/Arial10.PNG";
             string a14 = @"../../../staticimages/Arial14.PNG";
             string a20 = @"../../../staticimages/Arial20.PNG";
+            string tnr10 = @"../../../staticimages/TimesNewRoman10.PNG";
+            string tnr14 = @"../../../staticimages/TimesNewRoman14.PNG";
+            string tnr20 = @"../../../staticimages/TimesNewRoman20.PNG";
 
             string result10 = "";
             string result14 = "";
             string result20 = "";
             double resultAverage = 0.0;
 
-            using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
-            using (var image = Pix.LoadFromFile(a10))
-            using (var page = engine.Process(image))
-            {
-                result10 = page.GetText();
-            }
-
-            String[] words = getWords(result10);
-            String[] realWords = getWords(val2);
-
-            consoleTab2.Text += "Duzina skeniranog: " + words.Length + Environment.NewLine;
-            consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
-
-            //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
-            //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
-
-            //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
-            if (words.Length <= realWords.Length)
+            if (triger.Equals("arial10"))
             {
 
-                for (int i = 0; i < words.Length; i++)
+                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+                using (var image = Pix.LoadFromFile(a10))
+                using (var page = engine.Process(image))
                 {
-                    for (int j = i; j < realWords.Length; j++)
+                    result10 = page.GetText();
+                }
+
+                String[] words = getWords(result10);
+                String[] realWords = getWords(originalArial10);
+
+                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+
+                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
+
+                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+                if (words.Length <= realWords.Length)
+                {
+
+                    for (int i = 0; i < words.Length; i++)
                     {
-                        if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                        for (int j = i; j < realWords.Length; j++)
                         {
-                            LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
-                            int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                            consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                            {
+                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
-                            resultAverage += pom;
+                                resultAverage += pom;
 
-                            break;
+                                break;
+                            }
                         }
                     }
-                }
-                resultAverage = resultAverage / realWords.Length;
+                    resultAverage = resultAverage / realWords.Length;
 
-                consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                }
+            }else if(triger.Equals("arial14"))
+            {
+
+                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+                using (var image = Pix.LoadFromFile(a14))
+                using (var page = engine.Process(image))
+                {
+                    result14 = page.GetText();
+                }
+
+                String[] words = getWords(result14);
+                String[] realWords = getWords(originalArial14);
+
+                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+
+                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
+
+                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+                if (words.Length <= realWords.Length)
+                {
+
+                    for (int i = 0; i < words.Length; i++)
+                    {
+                        for (int j = i; j < realWords.Length; j++)
+                        {
+                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                            {
+                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+
+                                resultAverage += pom;
+
+                                break;
+                            }
+                        }
+                    }
+                    resultAverage = resultAverage / realWords.Length;
+
+                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                }
+            }
+            else if (triger.Equals("arial20"))
+            {
+
+                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+                using (var image = Pix.LoadFromFile(a20))
+                using (var page = engine.Process(image))
+                {
+                    result20 = page.GetText();
+                }
+
+                String[] words = getWords(result20);
+                String[] realWords = getWords(originalArial20);
+
+                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+
+                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
+
+                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+                if (words.Length <= realWords.Length)
+                {
+
+                    for (int i = 0; i < words.Length; i++)
+                    {
+                        for (int j = i; j < realWords.Length; j++)
+                        {
+                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                            {
+                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+
+                                resultAverage += pom;
+
+                                break;
+                            }
+                        }
+                    }
+                    resultAverage = resultAverage / realWords.Length;
+
+                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                }
+            }else if (triger.Equals("arial10"))
+            {
+
+                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+                using (var image = Pix.LoadFromFile(tnr10))
+                using (var page = engine.Process(image))
+                {
+                    result10 = page.GetText();
+                }
+
+                String[] words = getWords(result10);
+                String[] realWords = getWords(originalTNR10);
+
+                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+
+                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
+
+                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+                if (words.Length <= realWords.Length)
+                {
+
+                    for (int i = 0; i < words.Length; i++)
+                    {
+                        for (int j = i; j < realWords.Length; j++)
+                        {
+                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                            {
+                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+
+                                resultAverage += pom;
+
+                                break;
+                            }
+                        }
+                    }
+                    resultAverage = resultAverage / realWords.Length;
+
+                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                }
+            }
+            else if (triger.Equals("arial14"))
+            {
+
+                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+                using (var image = Pix.LoadFromFile(tnr14))
+                using (var page = engine.Process(image))
+                {
+                    result14 = page.GetText();
+                }
+
+                String[] words = getWords(result14);
+                String[] realWords = getWords(originalTNR14);
+
+                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+
+                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
+
+                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+                if (words.Length <= realWords.Length)
+                {
+
+                    for (int i = 0; i < words.Length; i++)
+                    {
+                        for (int j = i; j < realWords.Length; j++)
+                        {
+                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                            {
+                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+
+                                resultAverage += pom;
+
+                                break;
+                            }
+                        }
+                    }
+                    resultAverage = resultAverage / realWords.Length;
+
+                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                }
+            }
+            else if (triger.Equals("tnr20"))
+            {
+
+                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+                using (var image = Pix.LoadFromFile(tnr20))
+                using (var page = engine.Process(image))
+                {
+                    result20 = page.GetText();
+                }
+
+                String[] words = getWords(result20);
+                String[] realWords = getWords(originalTNR20);
+
+                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+
+                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
+
+                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+                if (words.Length <= realWords.Length)
+                {
+
+                    for (int i = 0; i < words.Length; i++)
+                    {
+                        for (int j = i; j < realWords.Length; j++)
+                        {
+                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                            {
+                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+
+                                resultAverage += pom;
+
+                                break;
+                            }
+                        }
+                    }
+                    resultAverage = resultAverage / realWords.Length;
+
+                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                }
             }
         }
 
@@ -352,6 +592,53 @@ namespace OCRTest
             ret = result.Split(' ');
 
             return ret;
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (comboBox2.Text.Contains("Arial 10point"))
+            {
+                triger = "arial10";
+                staticOcr.Enabled = true;
+                
+                return;
+            }
+            else if (comboBox2.Text.Contains("Arial 14point"))
+            {
+                triger = "arial14";
+                staticOcr.Enabled = true;
+                
+                return;
+            }
+            else if (comboBox2.Text.Contains("Arial 20point"))
+            {
+                triger = "arial20";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+            else if (comboBox2.Text.Contains("Times New Roman 10point"))
+            {
+                triger = "tnr10";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+            else if (comboBox2.Text.Contains("Times New Roman 14point"))
+            {
+                triger = "tnr14";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+            else if (comboBox2.Text.Contains("Times New Roman 20point"))
+            {
+                triger = "tnr20";
+                staticOcr.Enabled = true;
+
+                return;
+            }
         }
     }
 }
