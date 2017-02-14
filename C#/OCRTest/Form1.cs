@@ -14,6 +14,7 @@ using System.Net;
 using NAudio.Wave;
 using System.IO;
 using Tesseract;
+using SpeechLib;
 
 namespace OCRTest
 {
@@ -35,10 +36,23 @@ namespace OCRTest
         int imageCounter = 0;
         string imageDir = @"../../../images";
 
+        private Boolean srpski = false;
+
         public Form1()
         {
 
             InitializeComponent();
+
+            foreach (InstalledVoice voice in synthesizer.GetInstalledVoices())
+            {
+                VoiceInfo info = voice.VoiceInfo;
+                consoleTab1.Text += info.Name + Environment.NewLine;
+            }
+
+            
+
+            
+            
 
 
             consoleTab1.Enabled = true;
@@ -144,7 +158,7 @@ namespace OCRTest
             string putanja1 = @"../../../tessdata";
             string imagePath = imageDir + "/" + imageCounter.ToString() + ".png";
             Bitmap bitmap = new Bitmap(image);
-            string procitanTekst = "";
+            procitanTekst = "";
 
             bitmap.Save(imagePath);
             using (var engine = new TesseractEngine(putanja1, language, EngineMode.Default))
@@ -156,6 +170,8 @@ namespace OCRTest
                 procitanTekst = text;
             }
 
+            
+
             procitanTekst.Trim();
             if (!procitanTekst.Contains("~"))
             {
@@ -166,35 +182,42 @@ namespace OCRTest
             }
             consoleTab1.DeselectAll();
 
-            //Za izgovor
-            //WebClient tts;
-            //putanja = Environment.CurrentDirectory + @"/mp3/play" + redniBroj + ".mp3";
-            //redniBroj++;
-            //Uri uri = new Uri("https://translate.google.rs/translate_tts?client=tw-ob&tl=" + languageSpeak + "&q=" + procitanTekst);
-            //using (tts = new WebClient())
-            //{
-            //    tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
-            //    tts.DownloadFile(uri, putanja);
-            //}
+            //Za izgovor srpski
+            if (srpski)
+            {
+                WebClient tts;
+                putanja = Environment.CurrentDirectory + @"/mp3/play" + redniBroj + ".mp3";
+                redniBroj++;
+                Uri uri = new Uri("https://translate.google.rs/translate_tts?client=tw-ob&tl=sr&q=" + procitanTekst);
+                using (tts = new WebClient())
+                {
+                    tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
+                    tts.DownloadFile(uri, putanja);
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (!srpski)
+            {
+                synthesizer.SpeakAsync(procitanTekst);
+            }
+            else
+            {
+                WaveStream mainOutputStream = new Mp3FileReader(putanja);
+                volumeStream = new BlockAlignReductionStream(mainOutputStream);
 
-            WaveStream mainOutputStream = new Mp3FileReader(putanja);
-            volumeStream = new BlockAlignReductionStream(mainOutputStream);
+                player.Init(volumeStream);
 
+                player.Play();
+                player.PlaybackStopped += new EventHandler<StoppedEventArgs>(playStoped);
+            }
 
-
-            player.Init(volumeStream);
-
-            player.Play();
-            player.PlaybackStopped += new EventHandler<StoppedEventArgs>(playStoped);
-            //synthesizer.SpeakAsync(text);
             button1.Enabled = false;
             getImageToolStripMenuItem.Enabled = false;
-            //button3.Enabled = false;
-            //speakToolStripMenuItem.Enabled = false;
+            button3.Enabled = false;
+            speakToolStripMenuItem.Enabled = false;
             button4.Enabled = true;
             cancelSpeakingToolStripMenuItem.Enabled = true;
             consoleTab1.DeselectAll();
@@ -202,8 +225,15 @@ namespace OCRTest
 
         private void button4_Click(object sender, EventArgs e)
         {
-            player.Stop();
-            //synthesizer.SpeakAsyncCancelAll();
+            if (!srpski)
+            {
+                synthesizer.SpeakAsyncCancelAll();
+            }
+            else
+            {
+                player.Stop();
+            }
+
             button1.Enabled = true;
             getImageToolStripMenuItem.Enabled = true;
             button3.Enabled = true;
@@ -246,31 +276,35 @@ namespace OCRTest
             if (comboBox1.Text.Contains("English"))
             {
                 language = "eng";
-                languageSpeak = "en";
+                //languageSpeak = "en";
                 button1.Enabled = true;
+                synthesizer.SelectVoice("Microsoft Zira Desktop");
                 getImageToolStripMenuItem.Enabled = true;
                 return;
             }
             else if (comboBox1.Text.Contains("German"))
             {
                 language = "deu";
-                languageSpeak = "de";
+                //languageSpeak = "de";
                 button1.Enabled = true;
+                synthesizer.SelectVoice("Microsoft Server Speech Text to Speech Voice (de-DE, Hedda)");
                 getImageToolStripMenuItem.Enabled = true;
                 return;
             }
             else if (comboBox1.Text.Contains("Italian"))
             {
                 language = "ita";
-                languageSpeak = "it";
+                //languageSpeak = "it";
                 button1.Enabled = true;
+                synthesizer.SelectVoice("Microsoft Server Speech Text to Speech Voice (it-IT, Lucia)");
                 getImageToolStripMenuItem.Enabled = true;
                 return;
             }
             else if (comboBox1.Text.Contains("Serbian Latin"))
             {
+                srpski = true;
                 language = "srp_latn";
-                languageSpeak = "sr";
+                //languageSpeak = "sr";
                 button1.Enabled = true;
                 getImageToolStripMenuItem.Enabled = true;
                 return;
@@ -609,6 +643,52 @@ namespace OCRTest
                 triger = "arial14";
                 staticOcr.Enabled = true;
                 
+                return;
+            }
+            else if (comboBox2.Text.Contains("Arial 20point"))
+            {
+                triger = "arial20";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+            else if (comboBox2.Text.Contains("Times New Roman 10point"))
+            {
+                triger = "tnr10";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+            else if (comboBox2.Text.Contains("Times New Roman 14point"))
+            {
+                triger = "tnr14";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+            else if (comboBox2.Text.Contains("Times New Roman 20point"))
+            {
+                triger = "tnr20";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+        }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (comboBox2.Text.Contains("Arial 10point"))
+            {
+                triger = "arial10";
+                staticOcr.Enabled = true;
+
+                return;
+            }
+            else if (comboBox2.Text.Contains("Arial 14point"))
+            {
+                triger = "arial14";
+                staticOcr.Enabled = true;
+
                 return;
             }
             else if (comboBox2.Text.Contains("Arial 20point"))
