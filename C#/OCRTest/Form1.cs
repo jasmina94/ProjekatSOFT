@@ -183,7 +183,7 @@ namespace OCRTest
             consoleTab1.DeselectAll();
 
             //Za izgovor srpski
-            if (srpski)
+            if (srpski && procitanTekst.Length <=200)
             {
                 WebClient tts;
                 putanja = Environment.CurrentDirectory + @"/mp3/play" + redniBroj + ".mp3";
@@ -194,7 +194,13 @@ namespace OCRTest
                     tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
                     tts.DownloadFile(uri, putanja);
                 }
+            }else
+            {
+                button3.Enabled = false;
+                consoleTab1.Text += Environment.NewLine + Environment.NewLine + "Cant speak Serbian text. " + Environment.NewLine + "Text is too long (>200 characters)!" + Environment.NewLine;
             }
+
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
