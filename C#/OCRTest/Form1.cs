@@ -282,12 +282,12 @@ namespace OCRTest
             
             String message = "Validation of static text on 2 different fonts and 3 sizes. Arial and TimesNewRoman based on Levenstain distance algortithm.";
 
-            String val2 = "This is a lot of Arial 20 point text to test the ocr code and see  if it works on all types of file format.The quick brown dog jumped over the lazy fox.The quick brown dog jumped over the lazy fox.The quick brown dog jumped over the lazy fox.";
+            String val2 = "This is a lot of Arial 20 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox.";
 
-            console.Text += message + Environment.NewLine + val2 + Environment.NewLine;
+            //console.Text += message + Environment.NewLine + val2 + Environment.NewLine;
 
 
-            console.Text += "Validation for different sizes same font(Arial).";
+            //console.Text += "Validation for different sizes same font(Arial).";
 
             string a10 = @"../../../staticimages/Arial10.PNG";
             string a14 = @"../../../staticimages/Arial14.PNG";
@@ -308,32 +308,24 @@ namespace OCRTest
             String[] words = getWords(result20);
             String[] realWords = getWords(val2);
 
-            console.Text += "Duzina reci: " + words.Length + "; " + realWords.Length + Environment.NewLine;
-            console.Text += result20 + Environment.NewLine;
+            console.Text += "Duzina skeniranog: " + words.Length + Environment.NewLine;
+            console.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
 
-            //if(words.Length == realWords.Length)
-            //{
-            //    for(int i=0; i<words.Length; i++)
-            //    {
-            //        LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
-            //        resultAverage += validator.ComputeLevensteinDistance(words[i], realWords[i]);
-            //    }
-            //    resultAverage = resultAverage / words.Length;
-            //}
+            
 
-            for(int i = 0; i < realWords.Length; i++)
+            for(int i = 0; i < words.Length; i++)
             {
-                for (int j = 0; j < words.Length; j++)
+                for (int j = i; j < realWords.Length; j++)
                 {
-                    if (words[j].Contains(realWords[i]))
+                    if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
                     {
                         LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
-                        int pom = validator.ComputeLevensteinDistance(words[j], realWords[i]);
-                        console.Text += pom.ToString() + Environment.NewLine;
+                        int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                        console.Text +="Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
                         resultAverage += pom;
 
-                        
+                        break;   
                     }
                 }
             }
