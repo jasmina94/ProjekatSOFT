@@ -282,7 +282,7 @@ namespace OCRTest
             
             String message = "Validation of static text on 2 different fonts and 3 sizes. Arial and TimesNewRoman based on Levenstain distance algortithm.";
 
-            String val2 = "This is a lot of Arial 20 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox.";
+            String val2 = "This is a lot of Arial 10 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox.";
 
             //console.Text += message + Environment.NewLine + val2 + Environment.NewLine;
 
@@ -299,40 +299,45 @@ namespace OCRTest
             double resultAverage = 0.0;
 
             using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
-            using (var image = Pix.LoadFromFile(a20))
+            using (var image = Pix.LoadFromFile(a10))
             using (var page = engine.Process(image))
             {
-                result20 = page.GetText();
+                result10 = page.GetText();
             }
 
-            String[] words = getWords(result20);
+            String[] words = getWords(result10);
             String[] realWords = getWords(val2);
 
             console.Text += "Duzina skeniranog: " + words.Length + Environment.NewLine;
             console.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
 
-            
+            //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+            //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
 
-            for(int i = 0; i < words.Length; i++)
+            //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+            if (words.Length <= realWords.Length)
             {
-                for (int j = i; j < realWords.Length; j++)
+
+                for (int i = 0; i < words.Length; i++)
                 {
-                    if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                    for (int j = i; j < realWords.Length; j++)
                     {
-                        LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
-                        int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                        console.Text +="Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                        if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                        {
+                            LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                            int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                            console.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
-                        resultAverage += pom;
+                            resultAverage += pom;
 
-                        break;   
+                            break;
+                        }
                     }
                 }
+                resultAverage = resultAverage / realWords.Length;
+
+                console.Text += resultAverage.ToString() + Environment.NewLine;
             }
-            resultAverage = resultAverage / realWords.Length;
-
-            console.Text += resultAverage.ToString() + Environment.NewLine;
-
         }
 
         public String[] getWords(string result)
