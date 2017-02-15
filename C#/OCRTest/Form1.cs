@@ -136,6 +136,11 @@ namespace OCRTest
                 button4.Enabled = false;
                 cancelSpeakingToolStripMenuItem.Enabled = false;
                 consoleTab1.Text = "Succes image load!" + Environment.NewLine + Environment.NewLine;
+                Bitmap bitmap = new Bitmap(image);
+                Image processedImage = bitmap.DrawAsGrayscale();
+                Bitmap processedBitmap = new Bitmap(processedImage);
+                panel2.BackgroundImage = processedBitmap; // postavi sredjeni
+                panel1.BackgroundImage = bitmap;          // postavi odabrani
                 consoleTab1.DeselectAll();
             }
             else
@@ -157,12 +162,12 @@ namespace OCRTest
 
             string putanja1 = @"../../../tessdata";
             string imagePath = imageDir + "/" + imageCounter.ToString() + ".png";
+            Bitmap bitmap = (Bitmap) panel2.BackgroundImage;
 
-            Bitmap bitmap = new Bitmap(image);
             procitanTekst = "";
 
+            bitmap.Save(imagePath);  // cuvam procesuiranu sliku
 
-            bitmap.Save(imagePath);
             using (var engine = new TesseractEngine(putanja1, language, EngineMode.Default))
             using (var image = Pix.LoadFromFile(imagePath))
             using (var page = engine.Process(image))
@@ -172,8 +177,6 @@ namespace OCRTest
                 txtMeanConf1.Text = String.Format("{0:P}", page.GetMeanConfidence());
                 procitanTekst = text;
             }
-
-
 
             procitanTekst.Trim();
             if (!procitanTekst.Contains("~"))

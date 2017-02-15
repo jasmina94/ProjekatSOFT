@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapUtils.cs" />
+    <Compile Include="FilterBitmap.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

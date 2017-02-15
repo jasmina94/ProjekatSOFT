@@ -58,6 +58,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -124,7 +126,7 @@
             this.toolStripDropDownButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(510, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(838, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -226,11 +228,13 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 28);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(498, 297);
+            this.tabControl1.Size = new System.Drawing.Size(826, 306);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.panel2);
+            this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.txtMeanConf1);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.button1);
@@ -243,7 +247,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(490, 271);
+            this.tabPage1.Size = new System.Drawing.Size(818, 280);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Scan Text";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -279,7 +283,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(490, 271);
+            this.tabPage2.Size = new System.Drawing.Size(818, 280);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Levenshtein distance";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -327,7 +331,7 @@
             this.consoleTab2.Multiline = true;
             this.consoleTab2.Name = "consoleTab2";
             this.consoleTab2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.consoleTab2.Size = new System.Drawing.Size(274, 259);
+            this.consoleTab2.Size = new System.Drawing.Size(602, 268);
             this.consoleTab2.TabIndex = 10;
             // 
             // label5
@@ -359,11 +363,31 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(496, 14);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(299, 121);
+            this.panel1.TabIndex = 17;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Location = new System.Drawing.Point(496, 144);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(299, 121);
+            this.panel2.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(510, 337);
+            this.ClientSize = new System.Drawing.Size(838, 343);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "Form1";
@@ -411,5 +435,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
     }
 }
