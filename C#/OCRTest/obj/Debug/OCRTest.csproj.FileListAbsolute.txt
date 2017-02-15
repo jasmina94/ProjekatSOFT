@@ -59,3 +59,5 @@ C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Properties.Resour
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.GenerateResource.Cache
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\Interop.SpeechLib.dll
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.ResolveComReference.cache
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\Interop.SpeechLib.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.ResolveComReference.cache

@@ -194,7 +194,7 @@ namespace OCRTest
                     tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
                     tts.DownloadFile(uri, putanja);
                 }
-            }else
+            }else if(srpski && procitanTekst.Length > 200)
             {
                 button3.Enabled = false;
                 consoleTab1.Text += Environment.NewLine + Environment.NewLine + "Cant speak Serbian text. " + Environment.NewLine + "Text is too long (>200 characters)!" + Environment.NewLine;
@@ -284,7 +284,7 @@ namespace OCRTest
                 language = "eng";
                 //languageSpeak = "en";
                 button1.Enabled = true;
-                synthesizer.SelectVoice("Microsoft Zira Desktop");
+                synthesizer.SelectVoice("Microsoft Anna");
                 getImageToolStripMenuItem.Enabled = true;
                 return;
             }
