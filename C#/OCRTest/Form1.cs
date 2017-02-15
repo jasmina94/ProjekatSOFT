@@ -744,8 +744,6 @@ namespace OCRTest
         private void button6_Click_1(object sender, EventArgs e)
         {
             //opcija za iteriranje rec po rec
-
-
             consoleTab2.Clear();
             string putanja = @"../../../tessdata";
             string imageDir = @"../../../staticimages/Arial10.PNG";
@@ -818,22 +816,29 @@ namespace OCRTest
 
         private void button7_Click(object sender, EventArgs e)
         {
+            //string path = @"../../../tessdata";
+            //string imageDir = @"../../../staticimages/hello.png";
+            //using (TesseractEngine engine = new TesseractEngine(path, "eng", EngineMode.Default))
+            //{
+            //   using (Pix img = Pix.LoadFromFile(imageDir))
+            //    {
+            //        using (Page page = engine.Process(img, PageSegMode.OsdOnly))
+            //        {
+            //            Tesseract.Orientation orientation;
+            //            float confidence;
+            //            page.DetectBestOrientation(out orientation, out confidence);         
+            //            string text = page.GetText().Replace("\n", "\r\n");
+            //            consoleTab2.Text += text;
+            //        }
+            //    }
+            //}
             string path = @"../../../tessdata";
             string imageDir = @"../../../staticimages/hello.png";
-            using (TesseractEngine engine = new TesseractEngine(path, "eng", EngineMode.Default))
-            {
-               using (Pix img = Pix.LoadFromFile(imageDir))
-                {
-                    using (Page page = engine.Process(img, PageSegMode.OsdOnly))
-                    {
-                        Tesseract.Orientation orientation;
-                        float confidence;
-                        page.DetectBestOrientation(out orientation, out confidence);         
-                        string text = page.GetText().Replace("\n", "\r\n");
-                        consoleTab2.Text += text;
-                    }
-                }
-            }
+            Bitmap bitmap = new Bitmap(imageDir);
+
+            DocumentInspector inspector = new DocumentInspector(path, "eng");
+            DocumentInspector.DocumentInspectorPageOrientation orientation = inspector.DetectPageOrientation(bitmap);
+            consoleTab2.Text += orientation;
         }
     }
 }
