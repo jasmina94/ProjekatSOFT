@@ -15,6 +15,7 @@ using NAudio.Wave;
 using System.IO;
 using Tesseract;
 using SpeechLib;
+using System.Diagnostics;
 
 namespace OCRTest
 {
@@ -48,12 +49,6 @@ namespace OCRTest
                 VoiceInfo info = voice.VoiceInfo;
                 consoleTab1.Text += info.Name + Environment.NewLine;
             }
-
-            
-
-            
-            
-
 
             consoleTab1.Enabled = true;
             consoleTab1.ReadOnly = true;
@@ -128,6 +123,8 @@ namespace OCRTest
         private void button1_Click(object sender, EventArgs e)
         {
             image = SnippingTool.Snip();
+            txtMeanConf1.Clear();
+
             if (image != null)
             {
                 imageCounter++;
@@ -155,10 +152,15 @@ namespace OCRTest
 
         private void button2_Click(object sender, EventArgs e)
         {
+            txtMeanConf1.Clear();
+
+
             string putanja1 = @"../../../tessdata";
             string imagePath = imageDir + "/" + imageCounter.ToString() + ".png";
+
             Bitmap bitmap = new Bitmap(image);
             procitanTekst = "";
+
 
             bitmap.Save(imagePath);
             using (var engine = new TesseractEngine(putanja1, language, EngineMode.Default))
@@ -167,10 +169,11 @@ namespace OCRTest
             {
                 string text = page.GetText();
                 consoleTab1.Text = text;
+                txtMeanConf1.Text = String.Format("{0:P}", page.GetMeanConfidence());
                 procitanTekst = text;
             }
 
-            
+
 
             procitanTekst.Trim();
             if (!procitanTekst.Contains("~"))
@@ -183,7 +186,7 @@ namespace OCRTest
             consoleTab1.DeselectAll();
 
             //Za izgovor srpski
-            if (srpski && procitanTekst.Length <=200)
+            if (srpski && procitanTekst.Length <= 200)
             {
                 WebClient tts;
                 putanja = Environment.CurrentDirectory + @"/mp3/play" + redniBroj + ".mp3";
@@ -194,13 +197,14 @@ namespace OCRTest
                     tts.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (compatible; MSIE 9.0; Windows;)");
                     tts.DownloadFile(uri, putanja);
                 }
-            }else if(srpski && procitanTekst.Length > 200)
+            }
+            else if (srpski && procitanTekst.Length > 200)
             {
                 button3.Enabled = false;
                 consoleTab1.Text += Environment.NewLine + Environment.NewLine + "Cant speak Serbian text. " + Environment.NewLine + "Text is too long (>200 characters)!" + Environment.NewLine;
             }
 
-            
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -320,22 +324,24 @@ namespace OCRTest
         private void button5_Click(object sender, EventArgs e)
         {
             string putanja = @"../../../tessdata";
-            string imageDir = @"../../../image.png";
+            string imageDir = @"../../../staticimages/Arial10.PNG";
 
             using (var engine = new TesseractEngine(putanja, "eng", EngineMode.Default))
             using (var image = Pix.LoadFromFile(imageDir))
             using (var page = engine.Process(image))
             {
                 string text = page.GetText();
-                consoleTab2.Text = text;
+                consoleTab2.Text = text + Environment.NewLine;
+                consoleTab2.Text += "Mean confidence: " + String.Format("{0:P}", page.GetMeanConfidence());
             }
+
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             // prvo ocisti konzolu i ispisi tekst
-            
-            String message = "Validation of static text on 2 different fonts and 3 sizes. Arial and TimesNewRoman based on Levenstain distance algortithm.";
+            txtMeanConf2.Clear();
+            consoleTab2.Clear();
 
             String originalArial10 = "This is a lot of Arial 10 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
             String originalArial14 = "This is a lot of Arial 14 point text to test the ocr code and see if it works on all types of file format. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. The quick brown dog jumped over the lazy fox. ";
@@ -369,13 +375,14 @@ namespace OCRTest
                 using (var page = engine.Process(image))
                 {
                     result10 = page.GetText();
+                    txtMeanConf2.Text = String.Format("{0:P}", page.GetMeanConfidence());
                 }
 
                 String[] words = getWords(result10);
                 String[] realWords = getWords(originalArial10);
 
-                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
-                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+                consoleTab2.Text = "Scanned text length: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Original text length: " + realWords.Length + Environment.NewLine;
 
                 //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
                 //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
@@ -392,7 +399,7 @@ namespace OCRTest
                             {
                                 LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
                                 int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                                consoleTab2.Text += "Scanned word: " + words[i] + " Original word: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
                                 resultAverage += pom;
 
@@ -404,7 +411,8 @@ namespace OCRTest
 
                     consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
                 }
-            }else if(triger.Equals("arial14"))
+            }
+            else if (triger.Equals("arial14"))
             {
 
                 using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
@@ -412,13 +420,14 @@ namespace OCRTest
                 using (var page = engine.Process(image))
                 {
                     result14 = page.GetText();
+                    txtMeanConf2.Text = String.Format("{0:P}", page.GetMeanConfidence());
                 }
 
                 String[] words = getWords(result14);
                 String[] realWords = getWords(originalArial14);
 
-                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
-                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+                consoleTab2.Text = "Scanned text length: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Original text length: " + realWords.Length + Environment.NewLine;
 
                 //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
                 //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
@@ -435,7 +444,7 @@ namespace OCRTest
                             {
                                 LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
                                 int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                                consoleTab2.Text += "Scanned word: " + words[i] + " Original word: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
                                 resultAverage += pom;
 
@@ -456,13 +465,14 @@ namespace OCRTest
                 using (var page = engine.Process(image))
                 {
                     result20 = page.GetText();
+                    txtMeanConf2.Text = String.Format("{0:P}", page.GetMeanConfidence());
                 }
 
                 String[] words = getWords(result20);
                 String[] realWords = getWords(originalArial20);
 
-                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
-                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+                consoleTab2.Text = "Scanned text length: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Original text length: " + realWords.Length + Environment.NewLine;
 
                 //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
                 //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
@@ -479,50 +489,7 @@ namespace OCRTest
                             {
                                 LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
                                 int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
-
-                                resultAverage += pom;
-
-                                break;
-                            }
-                        }
-                    }
-                    resultAverage = resultAverage / realWords.Length;
-
-                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
-                }
-            }else if (triger.Equals("arial10"))
-            {
-
-                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
-                using (var image = Pix.LoadFromFile(tnr10))
-                using (var page = engine.Process(image))
-                {
-                    result10 = page.GetText();
-                }
-
-                String[] words = getWords(result10);
-                String[] realWords = getWords(originalTNR10);
-
-                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
-                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
-
-                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
-                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
-
-                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
-                if (words.Length <= realWords.Length)
-                {
-
-                    for (int i = 0; i < words.Length; i++)
-                    {
-                        for (int j = i; j < realWords.Length; j++)
-                        {
-                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
-                            {
-                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
-                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                                consoleTab2.Text += "Scanned word: " + words[i] + " Original word: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
                                 resultAverage += pom;
 
@@ -535,21 +502,22 @@ namespace OCRTest
                     consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
                 }
             }
-            else if (triger.Equals("arial14"))
+            else if (triger.Equals("tnr10"))
             {
 
                 using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
-                using (var image = Pix.LoadFromFile(tnr14))
+                using (var image = Pix.LoadFromFile(tnr10))
                 using (var page = engine.Process(image))
                 {
-                    result14 = page.GetText();
+                    result10 = page.GetText();
+                    txtMeanConf2.Text = String.Format("{0:P}", page.GetMeanConfidence());
                 }
 
-                String[] words = getWords(result14);
-                String[] realWords = getWords(originalTNR14);
+                String[] words = getWords(result10);
+                String[] realWords = getWords(originalTNR10);
 
-                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
-                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+                consoleTab2.Text = "Scanned text length: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Original text length: " + realWords.Length + Environment.NewLine;
 
                 //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
                 //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
@@ -566,7 +534,52 @@ namespace OCRTest
                             {
                                 LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
                                 int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                                consoleTab2.Text += "Scanned word: " + words[i] + " Original word: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+
+                                resultAverage += pom;
+
+                                break;
+                            }
+                        }
+                    }
+                    resultAverage = resultAverage / realWords.Length;
+
+                    consoleTab2.Text += resultAverage.ToString() + Environment.NewLine;
+                }
+            }
+            else if (triger.Equals("tnr14"))
+            {
+
+                using (var engine = new TesseractEngine(@"../../../tessdata", "eng", EngineMode.Default))
+                using (var image = Pix.LoadFromFile(tnr14))
+                using (var page = engine.Process(image))
+                {
+                    result14 = page.GetText();
+                    txtMeanConf2.Text = String.Format("{0:P}", page.GetMeanConfidence());
+                }
+
+                String[] words = getWords(result14);
+                String[] realWords = getWords(originalTNR14);
+
+                consoleTab2.Text = "Scanned text length: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Original text length: " + realWords.Length + Environment.NewLine;
+
+                //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
+                //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
+
+                //Zadovoljava sve nase slucajeve. Da li treba i za slucaj realWords.Length <= words.Length ?
+                if (words.Length <= realWords.Length)
+                {
+
+                    for (int i = 0; i < words.Length; i++)
+                    {
+                        for (int j = i; j < realWords.Length; j++)
+                        {
+                            if (words[i].Contains(realWords[j]) || words[i].Equals(realWords[j]))
+                            {
+                                LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
+                                int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
+                                consoleTab2.Text += "Scanned word: " + words[i] + " Original word: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
                                 resultAverage += pom;
 
@@ -587,13 +600,14 @@ namespace OCRTest
                 using (var page = engine.Process(image))
                 {
                     result20 = page.GetText();
+                    txtMeanConf2.Text = String.Format("{0:P}", page.GetMeanConfidence());
                 }
 
                 String[] words = getWords(result20);
                 String[] realWords = getWords(originalTNR20);
 
-                consoleTab2.Text = "Duzina skeniranog: " + words.Length + Environment.NewLine;
-                consoleTab2.Text += "Duzina originalnog: " + realWords.Length + Environment.NewLine;
+                consoleTab2.Text = "Scanned text length: " + words.Length + Environment.NewLine;
+                consoleTab2.Text += "Original text length: " + realWords.Length + Environment.NewLine;
 
                 //Posto je duzina skenirampg teksta uvek manja ili jednaka duzini originalnog teksta
                 //prolazak kroz taj kraci tekst (skeniran) i poredjenje sa recima iz originalnog (duzeg) teksta.
@@ -610,7 +624,7 @@ namespace OCRTest
                             {
                                 LevenstainStaticDataValidator validator = new LevenstainStaticDataValidator();
                                 int pom = validator.ComputeLevensteinDistance(words[i], realWords[j]);
-                                consoleTab2.Text += "Skenirana rec: " + words[i] + " Original rec: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
+                                consoleTab2.Text += "Scanned word: " + words[i] + " Original word: " + realWords[j] + Environment.NewLine + "i: " + i + "; j: " + j + "; POM: " + pom.ToString() + Environment.NewLine;
 
                                 resultAverage += pom;
 
@@ -641,14 +655,14 @@ namespace OCRTest
             {
                 triger = "arial10";
                 staticOcr.Enabled = true;
-                
+
                 return;
             }
             else if (comboBox2.Text.Contains("Arial 14point"))
             {
                 triger = "arial14";
                 staticOcr.Enabled = true;
-                
+
                 return;
             }
             else if (comboBox2.Text.Contains("Arial 20point"))
@@ -724,6 +738,101 @@ namespace OCRTest
                 staticOcr.Enabled = true;
 
                 return;
+            }
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            //opcija za iteriranje rec po rec
+
+
+            consoleTab2.Clear();
+            string putanja = @"../../../tessdata";
+            string imageDir = @"../../../staticimages/Arial10.PNG";
+
+            try
+            {
+                using (var engine = new TesseractEngine(putanja, "eng", EngineMode.Default))
+                {
+                    using (var img = Pix.LoadFromFile(imageDir))
+                    {
+                        using (var page = engine.Process(img))
+                        {
+                            var text = page.GetText();
+                            consoleTab2.Text += "Mean confidence: " + String.Format("{0:P}", page.GetMeanConfidence()) + Environment.NewLine;
+
+                            consoleTab2.Text += "Text (GetText): \r\n{0}" + text + Environment.NewLine;
+                            consoleTab2.Text += "Text (iterator):" + Environment.NewLine;
+                            using (var iter = page.GetIterator())
+                            {
+                                iter.Begin();
+
+                                do
+                                {
+                                    do
+                                    {
+                                        do
+                                        {
+                                            do
+                                            {
+                                                if (iter.IsAtBeginningOf(PageIteratorLevel.Block))
+                                                {
+                                                    consoleTab2.Text += "<BLOCK>" + Environment.NewLine;
+                                                }
+
+                                                consoleTab2.Text += iter.GetText(PageIteratorLevel.Word);
+                                                consoleTab2.Text += " " + Environment.NewLine;
+                                                var prop = iter.GetProperties();
+                                                float ugao = prop.DeskewAngle;
+                                                WritingDirection dir = prop.WritingDirection;
+                                                Tesseract.Orientation orieant = prop.Orientation;
+
+                                                consoleTab2.Text += ugao + " " + dir + " " + orieant + Environment.NewLine;
+
+                                                if (iter.IsAtFinalOf(PageIteratorLevel.TextLine, PageIteratorLevel.Word))
+                                                {
+                                                    consoleTab2.Text += Environment.NewLine;
+                                                }
+                                            } while (iter.Next(PageIteratorLevel.TextLine, PageIteratorLevel.Word));
+
+                                            if (iter.IsAtFinalOf(PageIteratorLevel.Para, PageIteratorLevel.TextLine))
+                                            {
+                                                consoleTab2.Text += Environment.NewLine;
+                                            }
+                                        } while (iter.Next(PageIteratorLevel.Para, PageIteratorLevel.TextLine));
+                                    } while (iter.Next(PageIteratorLevel.Block, PageIteratorLevel.Para));
+                                } while (iter.Next(PageIteratorLevel.Block));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.ToString());
+                Console.WriteLine("Unexpected Error: " + ex.Message);
+                Console.WriteLine("Details: ");
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string path = @"../../../tessdata";
+            string imageDir = @"../../../staticimages/hello.png";
+            using (TesseractEngine engine = new TesseractEngine(path, "eng", EngineMode.Default))
+            {
+               using (Pix img = Pix.LoadFromFile(imageDir))
+                {
+                    using (Page page = engine.Process(img, PageSegMode.OsdOnly))
+                    {
+                        Tesseract.Orientation orientation;
+                        float confidence;
+                        page.DetectBestOrientation(out orientation, out confidence);         
+                        string text = page.GetText().Replace("\n", "\r\n");
+                        consoleTab2.Text += text;
+                    }
+                }
             }
         }
     }

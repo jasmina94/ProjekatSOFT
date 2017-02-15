@@ -14,7 +14,7 @@ namespace OCRTest
             int m = t.Length;
             int[,] d = new int[n + 1, m + 1];
 
-            // Step 1
+            // Step 1 - ako je duzina jednog ili drugog nula onda ce vratiti nulu
             if (n == 0)
             {
                 return m;
@@ -25,7 +25,7 @@ namespace OCRTest
                 return n;
             }
 
-            // Step 2
+            // Step 2 - prolazi kroz duzinu prvog formira matricu
             for (int i = 0; i <= n; d[i, 0] = i++)
             {
             }
@@ -49,7 +49,7 @@ namespace OCRTest
                         d[i - 1, j - 1] + cost);
                 }
             }
-            // Step 7
+            // Step 7 - vraca broj iz samog coska matrice
             return d[n, m];
         }
     }

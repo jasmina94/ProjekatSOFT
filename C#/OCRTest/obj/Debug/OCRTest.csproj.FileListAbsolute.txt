@@ -21,24 +21,6 @@ D:\4\Soft Computing\PROJEKAT\How-to-use-Tessnet2-library\How to use Tessnet2 lib
 C:\Users\Jasmina\Documents\Visual Studio 2015\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.exe.config
 C:\Users\Jasmina\Documents\Visual Studio 2015\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.exe
 C:\Users\Jasmina\Documents\Visual Studio 2015\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.pdb
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.exe.config
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.exe
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.pdb
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.exe
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.pdb
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\NAudio.dll
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\tessnet2_64.dll
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\tessnet2_64.pdb
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csprojResolveAssemblyReference.cache
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Form1.resources
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Properties.Resources.resources
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.GenerateResource.Cache
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x64\liblept172.dll
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x64\libtesseract304.dll
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x86\liblept172.dll
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x86\libtesseract304.dll
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\Tesseract.dll
-C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\Tesseract.xml
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.exe.config
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.exe
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.pdb
@@ -59,5 +41,23 @@ C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Properties.Resour
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.GenerateResource.Cache
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\Interop.SpeechLib.dll
 C:\Users\ZlajoX\SOFT\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.ResolveComReference.cache
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csprojResolveAssemblyReference.cache
 C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\Interop.SpeechLib.dll
 C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.ResolveComReference.cache
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Form1.resources
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.Properties.Resources.resources
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.csproj.GenerateResource.Cache
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x64\liblept172.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x64\libtesseract304.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x86\liblept172.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\x86\libtesseract304.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.exe.config
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.exe
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\OCRTest.pdb
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\NAudio.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\Tesseract.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\tessnet2_64.dll
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\Tesseract.xml
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\bin\Debug\tessnet2_64.pdb
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.exe
+C:\Users\Jasmina\Desktop\ProjekatSOFT\C#\OCRTest\obj\Debug\OCRTest.pdb

@@ -47,10 +47,17 @@
             this.staticOcr = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtMeanConf1 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtMeanConf2 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.consoleTab2 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -194,11 +201,11 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(8, 242);
+            this.button5.Location = new System.Drawing.Point(8, 192);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.Size = new System.Drawing.Size(85, 23);
             this.button5.TabIndex = 8;
-            this.button5.Text = "Test";
+            this.button5.Text = "All";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -224,6 +231,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtMeanConf1);
+            this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.comboBox1);
@@ -239,8 +248,29 @@
             this.tabPage1.Text = "Scan Text";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // txtMeanConf1
+            // 
+            this.txtMeanConf1.Location = new System.Drawing.Point(8, 181);
+            this.txtMeanConf1.Name = "txtMeanConf1";
+            this.txtMeanConf1.Size = new System.Drawing.Size(183, 20);
+            this.txtMeanConf1.TabIndex = 16;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 165);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(110, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Mean confidence (%):";
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button7);
+            this.tabPage2.Controls.Add(this.button6);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.txtMeanConf2);
+            this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.comboBox2);
             this.tabPage2.Controls.Add(this.consoleTab2);
@@ -253,6 +283,22 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Levenshtein distance";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // txtMeanConf2
+            // 
+            this.txtMeanConf2.Location = new System.Drawing.Point(8, 130);
+            this.txtMeanConf2.Name = "txtMeanConf2";
+            this.txtMeanConf2.Size = new System.Drawing.Size(183, 20);
+            this.txtMeanConf2.TabIndex = 14;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 114);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Mean confidence (%):";
             // 
             // label2
             // 
@@ -283,6 +329,35 @@
             this.consoleTab2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.consoleTab2.Size = new System.Drawing.Size(274, 259);
             this.consoleTab2.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 172);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(105, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Compare confidence";
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(99, 192);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(92, 23);
+            this.button6.TabIndex = 16;
+            this.button6.Text = "Word by word";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(8, 231);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(92, 23);
+            this.button7.TabIndex = 17;
+            this.button7.Text = "Orientation";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form1
             // 
@@ -329,5 +404,12 @@
         private System.Windows.Forms.TextBox consoleTab2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox txtMeanConf2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtMeanConf1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button7;
     }
 }
