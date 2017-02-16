@@ -1,6 +1,7 @@
 - - - 
 ## Personal snipping tool - OCR newspaper reader
 - - -
+
 _**Faculty of Tehnical Sciences**, Applied computer sciences Novi Sad_
 
 _**Course**: Soft computing 2016/17_
