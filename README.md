@@ -27,12 +27,12 @@ The process of developing started with making small and useful tool with a purpo
 
 Steps in OCR:
 1. Input image
-1. Adaptive thresholding (making binary image)
-1. Connect component analysis
-1. Find lines and words (character outlines)
-1. Recognize words (pass I)
-1. Recognize words (pass II)
-1. Extract text from image
+2. Adaptive thresholding (making binary image)
+3. Connect component analysis
+4. Find lines and words (character outlines)
+5. Recognize words (pass I)
+6. Recognize words (pass II)
+7. Extract text from image
 
 Two passes for recognizing words are neccessery because in the first one words and recognized characters are passed to an adaptive classifier, which uses data as training data. The second pass is for the text to be recognized but now  using adaptive classifier, previously trained.
 
