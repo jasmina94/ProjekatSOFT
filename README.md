@@ -57,3 +57,6 @@ _Example_:
 #Posible improvements
 
 The field of OCR and Tesseract engine is constantly growing, so this could be starter point for some bigger projects. The question is, are there any limits? Can Tesseract engine be trained so well to recognize any font or size of the letters and other signs. Combining neural networks and this engine will be possible next step in this research.
+
+![IMG](http://i67.tinypic.com/2nir2bs.png[/IMG])
+![IMG](http://i67.tinypic.com/2ij3znq.png[/IMG])
