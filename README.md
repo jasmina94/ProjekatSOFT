@@ -20,7 +20,7 @@ Motivation for this project is to make personal snipping tool in the role of _on
 This project is mainly a research of [Tesseract](https://github.com/tesseract-ocr) engine and its 
 [wrapper](https://github.com/charlesw/tesseract) for .NET  framework.
 
-#Realisation
+#Realization
 
 - System requirements:
 
