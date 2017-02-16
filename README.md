@@ -1,5 +1,5 @@
 - - - 
-** Personal snipping tool - OCR newspaper reader**
+**Personal snipping tool - OCR newspaper reader**
 - - -
 _**Faculty of Tehnical Sciences**, Applied computer sciences Novi Sad_
 
