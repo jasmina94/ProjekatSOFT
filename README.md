@@ -26,12 +26,19 @@ This project is mainly a research of [Tesseract](https://github.com/tesseract-oc
 The process of developing started with making small and useful tool with a purpose of snipping images. With this tool user will be able to separate interesting digital content. Next step was integration of Tesseract engine. Firstly was used [tessnet2](http://www.pixel-technology.com/freeware/tessnet2/) library which didn't have support for many languages. Therefore, itegration moved to Tesseract 3.0.2 version. This engine can be trained to recognize specific character languages and writing directions, but it also has a large amount of language data.
 
 Steps in OCR:
+
 1. Input image
+
 2. Adaptive thresholding (making binary image)
+
 3. Connect component analysis
+
 4. Find lines and words (character outlines)
+
 5. Recognize words (pass I)
+
 6. Recognize words (pass II)
+
 7. Extract text from image
 
 Two passes for recognizing words are neccessery because in the first one words and recognized characters are passed to an adaptive classifier, which uses data as training data. The second pass is for the text to be recognized but now  using adaptive classifier, previously trained.
@@ -49,9 +56,12 @@ _Example_:
 - System requirements: OS Win7 or Win10
 
 - Techinal requirements: 
-				1.Possible Internet connection
-				2.Installed Speech platform V11
-        3.Installed support for other languages(English, German, Italian)
+	
+1.Possible Internet connection
+	
+2.Installed Speech platform V11
+	
+3.Installed support for other languages(English, German, Italian)
 
 
 #Posible improvements
