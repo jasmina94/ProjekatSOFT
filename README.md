@@ -57,11 +57,11 @@ _Example_:
 
 - Techinal requirements: 
 	
-1.Possible Internet connection
+	1.Possible Internet connection
 	
-2.Installed Speech platform V11
+	2.Installed Speech platform V11
 	
-3.Installed support for other languages(English, German, Italian)
+	3.Installed support for other languages(English, German, Italian)
 
 
 #Posible improvements
