@@ -291,7 +291,19 @@ namespace OCRTest
                 language = "eng";
                 //languageSpeak = "en";
                 button1.Enabled = true;
-                synthesizer.SelectVoice("Microsoft Anna");
+
+                foreach (InstalledVoice voice in synthesizer.GetInstalledVoices())
+                {
+                    VoiceInfo info = voice.VoiceInfo;
+                    if (info.Name.Contains("Anna")){
+                        synthesizer.SelectVoice("Microsoft Anna");
+                    }else if (info.Name.Contains("Zira"))
+                    {
+                        synthesizer.SelectVoice("Microsoft Zira Desktop");
+                    }
+                    
+                }
+                
                 getImageToolStripMenuItem.Enabled = true;
                 return;
             }
